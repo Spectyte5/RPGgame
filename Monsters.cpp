@@ -13,19 +13,21 @@ Monster::Monster(std::string monster_name) {
 	int endurance = rand() % 10;
 	int intelligence = rand() % 10;
 	int charisma = rand() % 10;
-	this->name = name;
 	this->strength = strenght;
 	this->dexterity = dexterity;
 	this->endurance = endurance;
 	this->intelligence = intelligence;
 	this->charisma = charisma;
+	this->name = monster_name;
 }
 
 void Monster::set_stats(std::string &name) {
 	
-	dmg = strength * 60;
-	def = strength * 50 + 20 * endurance;
-	hp = endurance * 240;
+	dmg = strength * 30+200;
+	def = 100 + strength * 50 + 20 * endurance;
+	hp = 100 + endurance * 240;
+	experience = rand() % 500;
+	level = rand() % 50;
 
 	std::string monster_name = name;
 	std::string filename = "./Monsters/";
@@ -34,16 +36,17 @@ void Monster::set_stats(std::string &name) {
 	std::ofstream file;
 	file.open(filename.c_str());
 
-	file << dmg << " " << def << " " << hp <<  std::endl;
+	file << dmg << " " << def << " " << hp << " " << experience << " " << level << std::endl;
 
 	file.close();
 }
 
 void Monster::get_stats(std::string &name){
+
 	std::vector <int> table;
 	std::string monster_name = name;
 	std::string filename = "./Monsters/";
-	monster_name.append("_stats.txt");
+	monster_name.append(".txt");
 	filename.append(monster_name);
 	std::ifstream file;
 	file.open(filename.c_str());
@@ -58,13 +61,14 @@ void Monster::get_stats(std::string &name){
 	dmg = table[0];
 	def = table[1];
 	hp = table[2];
+	experience = table[3];
+	level = table[4];
 
-	std::cout << "\nStats:" << std::endl;
-	std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP: " << hp << std::endl;
-
+	std::cout << "\nMonster Encounted: " << name << "\nStats:" << std::endl;
+	std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP: " << hp << "\n XP reward: " << experience << "\n Level: " << level << std::endl;
 }
 
-std::vector <Monster> generate_monsters(std::vector <int>& monster_id, std::vector <std::string> monsternames) {
+std::vector <Monster> generate_monsters(std::vector <int> &monster_id, std::vector <std::string> monsternames) {
 
 	std::vector <Monster> monster_list;
 	std::vector <std::string> m_name = { "0", "1", "2", "3", "4" };

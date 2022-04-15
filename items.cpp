@@ -9,12 +9,11 @@
 void Item::start_item_c(Character character){
 
 	std::vector <std::string> prof{ "Mage", "Warrior", "Berserker", "Thief" };
-	std::vector <std::string> startw{ "Weak Staff", "Weak Sword", "Weak Axe", "Weak Bow" };
 
 	if (character.prof == prof[0]) {
 		id = 255;
 		type = 0;
-		name = "Weak Stuff";
+		name = "Weak Staff";
 		value = 0;
 		damage = 250;
 	}
@@ -55,8 +54,10 @@ void Item::save_item_c(Character character) {
 	file.close();
 };
 
-void Item::equipped_item_c(Character &character, std::vector <std::string> types){
+void Item::equipped_item_c(Character &character, std::vector <std::string> weaponnames){
 	
+	std::vector <std::string> startw{ "Weak Staff", "Weak Sword", "Weak Axe", "Weak Bow" };
+	std::vector <std::string> types = { "Staff", "Sword", "Axe" ,"Bow" };
 	std::string sname = character.name;
 	std::string filename = "./Items/";
 	sname.append(".txt");
@@ -64,7 +65,6 @@ void Item::equipped_item_c(Character &character, std::vector <std::string> types
 	std::ifstream file;
 	file.open(filename.c_str());
 	std::vector <int> table;
-
 	int number = 0;
 
 	while (file >> number)
@@ -77,13 +77,25 @@ void Item::equipped_item_c(Character &character, std::vector <std::string> types
 	type = table[2];
 	damage = table[3];
 
-	if (id < 250) {
-		name = types[id];
+	if (id == 255) {
+		name = startw[0];
+	}
+	else if (id == 256) {
+		name = startw[1];
+	}
+	else if (id == 257) {
+		name = startw[2];
+	}
+	else if (id == 258) {
+		name = startw[3];
+	}
+	else {
+		name = weaponnames[id];
 	}
 		character.dmg += damage;
 
 		std::cout << "\nWeapon Equipped: " << name << "\n Weapon Type: " << types[type] << "\n Weapon Value: " << value << "\n Weapon Damage: " << damage << "\n Character damage with weapon: " << character.dmg << std::endl;
-};
+	};
 
 void Item:: lottery_item(std::vector <std::string> itemnames){
 	
@@ -129,3 +141,22 @@ void Item::create_item(){
 	file.close();
 
 };
+
+void Item::change_item_c(Character& character, std::vector <std::string> types, Item item_dropped) {
+
+	if (damage < item_dropped.damage && item_dropped.type==type) {
+
+		character.dmg -= damage;
+		damage = item_dropped.damage;
+		id = item_dropped.id;
+		name = item_dropped.name;
+		type = item_dropped.type;
+		value = item_dropped.value;
+
+		std::cout << "Weapon changed: " << std::endl;
+	}
+	else {
+		character.dmg -= damage;
+		std::cout << "No Weapon changes: " << std::endl;
+	}
+}

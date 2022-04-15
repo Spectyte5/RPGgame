@@ -35,7 +35,6 @@
 		def = 200+strength * 50 + 20 * endurance;
 		hp = 200+endurance * 240;
 		XP = 1000 + intelligence * 100;
-		esc;
 
 		if (charisma > dexterity) {
 			esc = (charisma * 640) / 100;
@@ -54,10 +53,10 @@
 		std::ofstream file;
 		file.open(filename.c_str());
 
-		file << dmg << " " << def << " " << hp << " " << XP << " " << esc << " " << std::endl;
+		file << dmg << " " << def << " " << hp << " " << XP << " " << esc << " " << experience << " " << level << " " << std::endl;
 
 		std::cout << "\nStats:" << std::endl;
-		std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP:" << hp << "\n XP per level: " << XP << "\n Escape Chance: " << esc << "%" << std::endl;
+		std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP:" << hp << "\n XP per level: " << XP << "\n Escape Chance: " << esc << "%" << "\n Current XP: " << experience << "\n Level: " << level << std::endl;
 		file.close();
 	}
 
@@ -82,9 +81,11 @@
 		hp = table[2];
 		XP = table[3];
 		esc = table[4];
+		experience = table[5];
+		level = table[6];
 
 		std::cout << "\nStats:" << std::endl;
-		std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP: " << hp << "\n XP per level: " << XP << "\n Escape Chance: " << esc << "%" << std::endl;
+		std::cout << " Damage: " << dmg << "\n Defense: " << def << "\n HP: " << hp << "\n XP per level: " << XP << "\n Escape Chance: "  << esc << "%" << "\n Current XP: " << experience << "\n Level: " << level << std::endl;
 
 	}
 

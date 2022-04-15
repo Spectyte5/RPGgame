@@ -10,6 +10,10 @@ public:
 	int hp=0;
 	int esc=0;
 	int XP=0;
+	int experience = 0;
+	int level = 0;
+	bool levelup = 0;
+
 	virtual void set_stats(std::string &name) = 0;
 	virtual void save_stats(std::string &name) = 0;
 	virtual void get_stats(std::string &name) = 0;
@@ -81,10 +85,19 @@ struct Item{
 	int damage = 0;
 	void start_item_c(Character character);
 	void save_item_c(Character character);
-	void equipped_item_c(Character &character, std::vector <std::string> types);
+	void equipped_item_c(Character &character, std::vector <std::string> weaponnames);
 	void lottery_item(std::vector <std::string> itemnames);
 	void create_item();
+	void change_item_c(Character& character, std::vector <std::string> types, Item item_dropped);
 };
+
+template<class C, class M> class Battlesim{
+
+	public:
+		void simmulate(C &character, M &monster);
+		void level_up(C &character);
+};
+
 
 Character create_character();
 
@@ -97,5 +110,6 @@ void available_characters();
 std::vector <Monster> generate_monsters(std::vector <int>& monster_id, std::vector <std::string> monsternames);
 
 void save_monsters(std::vector <Monster> monster_list, std::vector <int> monster_id);
+
 
 #endif 
