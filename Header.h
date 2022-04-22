@@ -92,12 +92,33 @@ struct Item{
 };
 
 template<class C, class M> class Battlesim{
-
 	public:
+		int win = 0;
 		void simmulate(C &character, M &monster);
 		void level_up(C &character);
 };
 
+//node structure
+struct Node {
+    int data;
+    Node* next;
+};
+
+class LinkedList {
+private:
+    Node* head;
+public:
+    LinkedList() {
+        head = NULL;
+    }
+    //Add new element at the end of the list
+	void push_back(int newElement);
+    //Delete first node of the list
+	void pop_front();
+    //display the content of the list
+	void PrintList();
+
+};
 
 Character create_character();
 
@@ -110,6 +131,5 @@ void available_characters();
 std::vector <Monster> generate_monsters(std::vector <int>& monster_id, std::vector <std::string> monsternames);
 
 void save_monsters(std::vector <Monster> monster_list, std::vector <int> monster_id);
-
 
 #endif 

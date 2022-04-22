@@ -47,17 +47,20 @@ void Battlesim<Character, Monster>::simmulate(Character &character, Monster &mon
 		//Check who won and manage experience:
 		if (character.hp == 0 && character.esc-rand() % 100 > 0) {
 			std::cout << "\nYou escaped the monster and cheated death!" << "\nNo XP changes."  << std::endl;
+			win = 2;
 			break;
 		}
 		else if (monster.hp == 0) {
 			std::cout << "\nYou won the fight!" << "\nXP gained: " << monster.experience << std::endl;
 			character.experience += monster.experience;
+			win = 1;
 			break;
 		}
 		else if (character.hp == 0) {
 			std::cout << "\nYou are Dead!" << "\nXP lost: " << monster.experience << std::endl;
 			character.experience -= monster.experience;
 			if (character.experience < 0) character.experience = 0;
+			win = 0;
 			break;
 		}
 		
@@ -109,6 +112,3 @@ void Battlesim<Character,Monster>::level_up(Character &character){
 		character.charisma += stats[4];
 	}
 }
-
-
-//fix character damage and weapon saving, add templetaized class!
