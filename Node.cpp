@@ -45,12 +45,13 @@
         }
     }
 
-    //display the content of the list
-    void LinkedList::PrintList() {
+    //display the result from the list
+    void LinkedList::PrintList(std::vector <std::string> monster_enq, std::vector <int> xp) {
         
         Node* temp = head;
         int node_cnt = 1;
 
+        //while temp pointer is not null, so the list has a next element, print results:
         if (temp != NULL) {
             std::cout << "\nCurrent session history of battles: " <<std::endl;
             while (1) {
@@ -58,15 +59,15 @@
                 std::cout << node_cnt << "." ;
 
                 if (temp->data == 2) {
-                    std::cout << " ESCAPE" << std::endl;
+                    std::cout << " ESCAPE" << " VS " << monster_enq[node_cnt - 1] << ", No XP Change" << std::endl;
                 }
 
                 else if (temp->data == 1) {
-                    std::cout << " WIN" << std::endl;
+                    std::cout << " WIN" << " VS " << monster_enq[node_cnt - 1] << ", XP gained: +" << xp[node_cnt - 1] << " XP" << std::endl;
                 }
 
                 else {
-                    std::cout << " LOSE" << std::endl;
+                    std::cout << " LOSE" << " VS " << monster_enq[node_cnt - 1] << ", XP lost: -" << xp[node_cnt - 1] << " XP" << std::endl;
                 }
                 node_cnt++;
                 temp = temp->next;
