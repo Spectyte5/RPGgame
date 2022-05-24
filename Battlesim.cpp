@@ -41,7 +41,7 @@ void Battlesim<Character, Monster>::simmulate(Character &character, Monster &mon
 					}
 					std::cout << "-------------------------------------------------------------------" << std::endl;
 
-					while (std::cout << "\nYour HP ammount = " << character.hp << "\nDo you want to use the potion?" && std::cin >> use_potion && (use_potion < 5 && use_potion>0)) {
+					while (std::cout << "\nYour HP ammount = " << character.hp << "\nDo you want to use the potion? \n Yes: Press 1\n No: Press 0" && std::cin >> use_potion && (use_potion < 5 && use_potion>0)) {
 							
 						std::cout << "Choose potion: 0: Lesser, 1: Standard, 2: Greater, 3:Supreme. " << std::endl;
 							int x;
@@ -49,8 +49,11 @@ void Battlesim<Character, Monster>::simmulate(Character &character, Monster &mon
 							std::cin >> x;
 							std::cout << "Enter ammount of chosen potion bottles to be used. " << std::endl;
 							std::cin >> ammount;
-
-							if (potions[x].ammount >= ammount && ammount > 0) {
+							if(x >3 || x<0 || ammount>potions[x].ammount) {
+								std::cout << "Something went wrong!" << std::endl;
+								exit(0);
+							}
+							else if (potions[x].ammount >= ammount && ammount > 0) {
 
 								character.hp += ammount * potions[x].hptoadd;
 								potions[x].ammount -= ammount;
@@ -135,7 +138,7 @@ void Battlesim<Character,Monster>::level_up(Character &character){
 	std::vector <std::string> disp = { "Strength: \nStrength defines your melee damage and influences HP ammount.", "Dexterity \nDexterity skill your escape chance if you are destined to lose.", "Endurance: \nEndurance skill determines ammount of damage taken and ammount of HP.", "Inteligence: \nInteligence skill defines ammount of XP earned.", "Charisma: \nCharisma determines the merchant sell and buy prizes." };
 
 	//if level experience reached add level and reset XP:
-	if (character.experience > 1000 * character.level-character.XP) {
+	if ((character.experience > 1000 * character.level-character.XP && character.level >=5) || (character.experience > 3000 * character.level - character.XP && character.level < 5)) {
 
 		character.experience = 0;
 		character.level += 1;

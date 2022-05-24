@@ -211,26 +211,36 @@ int main()
 	else if (x == 3) {
 		std::string c_name;
 		int pos = 0;
-		std::cout << "-------------------------------------------------------------------" << std::endl;
-		std::cout << "CODEX" << std::endl; 
-		std::cout << "Weapons:\n" << std::endl;
+		bool yn;
 
-		for (auto& n : weaponnames) {
-			std::cout << n << std::endl;
+		while (std::cout << "\nYou want to check something in the codex? \n Yes: Press 1\n No: Press 0" && std::cin >> yn && yn == 1) {
+			std::cout << "-------------------------------------------------------------------" << std::endl;
+			std::cout << "CODEX" << std::endl;
+			std::cout << "-------------------------------------------------------------------" << std::endl;
+			std::cout << "Weapons:" << std::endl;
+
+			for (auto& n : weaponnames) {
+				std::cout << n << std::endl;
+			}
+			std::cout << "-------------------------------------------------------------------" << std::endl;
+			std::cout << "\nMonsters:" << std::endl;
+
+			for (auto& n : monsternames) {
+				std::cout << n << std::endl;
+			}
+
+			std::cout << "-------------------------------------------------------------------" << std::endl;
+			std::cout << "Enter name of weapon or monster you want to see more info about : " << std::endl;
+			std::cin >> c_name;
+			search_codex(codex, c_name, pos);
+			std::cout << "-------------------------------------------------------------------" << std::endl;
+			//clear console, name string and position
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			c_name.clear();
+			pos = 0;
 		}
-
-		std::cout << "\nMonsters: \n" << std::endl;
-		
-		for (auto& n : monsternames) {
-			std::cout << n << std::endl;
-		}
-
-		std::cout << "-------------------------------------------------------------------" << std::endl;
-		std::cout << "Enter name of weapon or monster you want to see more info about : " << std::endl;
-		std::cin >> c_name;
-		search_codex(codex, c_name, pos);
-		std::cout << "-------------------------------------------------------------------" << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 		exit(0);
 	}
 	else {

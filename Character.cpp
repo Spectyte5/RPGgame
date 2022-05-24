@@ -186,20 +186,27 @@ Character load_character() {
 	std::vector <std::string> prof{ "Mage", "Warrior", "Berserker", "Thief" };
 	std::vector <int> table;
 	std::string name;
-	std::string filename = "./Saves/";
+	std::ifstream file;
 
 	//opens character file from the inputed name:
-	std::cout << "Enter name of your character: " << std::endl;
-	std::cin >> name;
-	std::string display = name;
-	display.append(".txt");
-	std::ifstream file;
-	filename.append(display);
-	//check if file exists:
-	file.open(filename.c_str());
-	if (!file) {
-		std::cout << "Save file does not exist, try again!" << std::endl;
-		exit(0);
+	while (1) {
+		std::cout << "Enter name of your character: " << std::endl;
+		std::cin >> name;
+		std::string filename = "./Saves/";
+		std::string display = name;
+		display.append(".txt");
+		filename.append(display);
+		//check if file exists:
+		file.open(filename.c_str());
+		if (!file) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			filename.clear();
+			std::cout << "\nSave file does not exist, try again!\n" << std::endl;
+		}
+		else {
+			break;
+		}
 	}
 	int number = 0;
 	//read values from txt
